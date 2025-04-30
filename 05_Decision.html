@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.3.433">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
 <title>STA 5320 Predictive Analytics - 5&nbsp; Decision Trees</title>
 <style>
 code{white-space: pre-wrap;}
@@ -53,6 +56,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
+
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
@@ -70,7 +74,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -89,12 +94,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><link rel="stylesheet" href="webex.css">
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="webex.css">
 </head>
+
 <body class="nav-sidebar docked">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
@@ -105,9 +118,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <i class="bi bi-search"></i>
       </button>
     </div>
-  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./"></a> 
     </div>
@@ -119,7 +136,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-<li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Introduction</span></a>
@@ -173,26 +190,42 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Clustering</span></span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09_MLP.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Multi-Layer Perceptron</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10_Fitting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Fitting and Overfitting</span></span></a>
+  </div>
+</li>
     </ul>
-</div>
-</nav><div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">5.1</span> Introduction</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">5.1</span> Introduction</a></li>
   <li><a href="#structure-of-decision-trees" id="toc-structure-of-decision-trees" class="nav-link" data-scroll-target="#structure-of-decision-trees"><span class="header-section-number">5.2</span> Structure of Decision Trees</a></li>
   <li><a href="#example-using-tidymodels" id="toc-example-using-tidymodels" class="nav-link" data-scroll-target="#example-using-tidymodels"><span class="header-section-number">5.3</span> Example Using <code>tidymodels</code></a></li>
   <li><a href="#decision-trees-for-regression" id="toc-decision-trees-for-regression" class="nav-link" data-scroll-target="#decision-trees-for-regression"><span class="header-section-number">5.4</span> 4. Decision Trees for Regression</a></li>
   <li><a href="#advantages-and-disadvantages" id="toc-advantages-and-disadvantages" class="nav-link" data-scroll-target="#advantages-and-disadvantages"><span class="header-section-number">5.5</span> Advantages and Disadvantages</a></li>
-  </ul></nav>
+  </ul>
+</nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
-<h1 class="title">
-<span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Decision Trees</span>
-</h1>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Decision Trees</span></h1>
 </div>
 
 
@@ -205,16 +238,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
-</header><section id="introduction" class="level2" data-number="5.1"><h2 data-number="5.1" class="anchored" data-anchor-id="introduction">
-<span class="header-section-number">5.1</span> Introduction</h2>
+</header>
+
+<section id="introduction" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">5.1</span> Introduction</h2>
 <p>Decision trees are a fundamental machine learning technique used for both classification and regression tasks. At their core, decision trees model decisions and their possible consequences, including chance event outcomes, resource costs, and utility. They are a non-parametric supervised learning method used for classifying data points (in classification trees) and predicting continuous values (in regression trees).</p>
 <p><strong>Historical Context and Evolution</strong>: Decision trees have been a part of the computational and statistical landscape since the 1960s, evolving from their initial use in decision analysis and research into an indispensable tool in the machine learning toolkit. The development of algorithms such as ID3 by Ross Quinlan in the 1980s and its successors, C4.5 and CART (Classification and Regression Trees), marked significant milestones in making decision trees more efficient, accurate, and applicable to a broader range of data types and machine learning problems.</p>
 <p><strong>Intuition Behind Decision Trees</strong>: At the heart of decision trees is a simple yet powerful idea—mimicking human decision-making processes through a structured, hierarchical approach. By breaking down complex decisions into a series of simpler choices, each based on specific attributes or features of the data, decision trees can navigate the intricacies of real-world data and arrive at predictions or classifications. This intuitive approach to problem-solving, mirroring the “if-then-else” decision-making logic, makes decision trees both accessible and powerful for addressing diverse analytical challenges.</p>
 <p><strong>Significance in Machine Learning and Artificial Intelligence</strong>: Decision trees serve as foundational building blocks for more complex models, such as random forests and gradient boosting machines, highlighting their importance not only as standalone models but also as components in ensemble methods. Their ability to handle both numerical and categorical data, accommodate non-linear relationships without assuming data distribution, and provide interpretable models that can be easily visualized and understood, underscores their versatility and broad applicability. Furthermore, the role of decision trees in feature importance analysis, where they help in identifying the most significant predictors in a dataset, showcases their utility in exploratory data analysis and model refinement processes.</p>
-</section><section id="structure-of-decision-trees" class="level2" data-number="5.2"><h2 data-number="5.2" class="anchored" data-anchor-id="structure-of-decision-trees">
-<span class="header-section-number">5.2</span> Structure of Decision Trees</h2>
+</section>
+<section id="structure-of-decision-trees" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="structure-of-decision-trees"><span class="header-section-number">5.2</span> Structure of Decision Trees</h2>
 <p>Decision trees are graphical representations of decision-making processes. They consist of nodes and branches, where each node represents a decision point or an outcome, and branches represent the choices leading to those decisions or outcomes. The structure can be divided into three main components:</p>
-<section id="root-node" class="level4"><h4 class="anchored" data-anchor-id="root-node">1. <strong>Root Node</strong>:</h4>
+<section id="root-node" class="level4">
+<h4 class="anchored" data-anchor-id="root-node">1. <strong>Root Node</strong>:</h4>
 <p>This is the starting point of the tree, where the entire dataset is considered before any splits are made. The root node identifies the feature that provides the most significant information gain or the best split based on a specific criterion, like Gini impurity or entropy for classification trees, and variance reduction for regression trees.</p>
 <p><strong>Gini Impurity</strong></p>
 <p>Gini impurity is a measure of how often a randomly chosen element from the set would be incorrectly labeled if it was randomly labeled according to the distribution of labels in the subset. The Gini impurity of a dataset is minimal (zero) when all the elements belong to a single class, indicating perfect homogeneity.</p>
@@ -254,11 +291,12 @@ Entropy(t) = -\sum_{i=1}^{J} p_i \log_2(p_i)
 <p><strong>Comparison and Usage in Decision Trees</strong></p>
 <p>Both Gini impurity and entropy aim to measure the homogeneity of a dataset; they are just different mathematical methods for doing so. The choice between using Gini impurity or entropy for building a decision tree often depends on the specific dataset and problem context, though in practice, the difference in the trees they produce is often quite small.</p>
 <ul>
-<li>
-<strong>Gini Impurity</strong> is faster to compute, as it doesn’t involve logarithmic functions, which makes it a good default choice for decision tree learning algorithms.</li>
-<li>
-<strong>Entropy</strong> might produce slightly more balanced trees because it tends to penalize non-uniform class distributions more heavily than Gini impurity.</li>
-</ul></section><section id="internal-nodes" class="level4"><h4 class="anchored" data-anchor-id="internal-nodes">2. <strong>Internal Nodes</strong>:</h4>
+<li><strong>Gini Impurity</strong> is faster to compute, as it doesn’t involve logarithmic functions, which makes it a good default choice for decision tree learning algorithms.</li>
+<li><strong>Entropy</strong> might produce slightly more balanced trees because it tends to penalize non-uniform class distributions more heavily than Gini impurity.</li>
+</ul>
+</section>
+<section id="internal-nodes" class="level4">
+<h4 class="anchored" data-anchor-id="internal-nodes">2. <strong>Internal Nodes</strong>:</h4>
 <p>Internal nodes play a crucial role in the structure and functioning of decision trees, acting as decision points that guide the splitting of the dataset into increasingly homogeneous subsets based on the values of different features. Each internal node represents a “test” or “question” applied to a particular attribute or feature, determining the path down the tree that an observation will follow.</p>
 <p><strong>Characteristics of Internal Nodes</strong></p>
 <ul>
@@ -276,87 +314,92 @@ Entropy(t) = -\sum_{i=1}^{J} p_i \log_2(p_i)
 <p><strong>Example: The Iris Dataset</strong></p>
 <p>Consider a decision tree being trained on the Iris dataset. An internal node might test the petal length of an iris flower. Suppose the best split identified at this node is to divide the dataset into flowers with a petal length less than 2.5 cm and those with a petal length greater than or equal to 2.5 cm. This test on petal length is the “question” posed by the internal node, and it effectively separates Iris setosa (which typically has shorter petals) from Iris versicolor and Iris virginica (which have longer petals). Each of the resulting subsets is then passed to child nodes where further tests (internal nodes) are applied based on other features, such as petal width or sepal length, following the same process of maximizing homogeneity within the subsets.</p>
 <p>Internal nodes are thus the mechanism by which decision trees make sequential decisions, leading to the classification or regression predictions at the leaf nodes. Their creation and organization within the tree are fundamental to the model’s ability to accurately represent and predict the underlying relationships in the data.</p>
-</section><section id="leaf-nodes-leaf-nodes-in-decision-trees-are-the-terminal-points-where-decisions-are-made-or-values-are-predicted-concluding-the-path-from-the-root-through-the-internal-nodes-based-on-the-attributes-of-the-data-being-analyzed.-these-nodes-do-not-split-any-further-and-represent-the-final-output-of-the-decision-making-process-within-the-tree-structure.-in-the-context-of-decision-trees-there-are-two-primary-types-of-tasks-they-can-be-used-for-each-defining-what-a-leaf-node-represents" class="level4"><h4 class="anchored" data-anchor-id="leaf-nodes-leaf-nodes-in-decision-trees-are-the-terminal-points-where-decisions-are-made-or-values-are-predicted-concluding-the-path-from-the-root-through-the-internal-nodes-based-on-the-attributes-of-the-data-being-analyzed.-these-nodes-do-not-split-any-further-and-represent-the-final-output-of-the-decision-making-process-within-the-tree-structure.-in-the-context-of-decision-trees-there-are-two-primary-types-of-tasks-they-can-be-used-for-each-defining-what-a-leaf-node-represents">3. <strong>Leaf Nodes</strong>: Leaf nodes in decision trees are the terminal points where decisions are made or values are predicted, concluding the path from the root through the internal nodes based on the attributes of the data being analyzed. These nodes do not split any further and represent the final output of the decision-making process within the tree structure. In the context of decision trees, there are two primary types of tasks they can be used for, each defining what a leaf node represents:</h4>
+</section>
+<section id="leaf-nodes-leaf-nodes-in-decision-trees-are-the-terminal-points-where-decisions-are-made-or-values-are-predicted-concluding-the-path-from-the-root-through-the-internal-nodes-based-on-the-attributes-of-the-data-being-analyzed.-these-nodes-do-not-split-any-further-and-represent-the-final-output-of-the-decision-making-process-within-the-tree-structure.-in-the-context-of-decision-trees-there-are-two-primary-types-of-tasks-they-can-be-used-for-each-defining-what-a-leaf-node-represents" class="level4">
+<h4 class="anchored" data-anchor-id="leaf-nodes-leaf-nodes-in-decision-trees-are-the-terminal-points-where-decisions-are-made-or-values-are-predicted-concluding-the-path-from-the-root-through-the-internal-nodes-based-on-the-attributes-of-the-data-being-analyzed.-these-nodes-do-not-split-any-further-and-represent-the-final-output-of-the-decision-making-process-within-the-tree-structure.-in-the-context-of-decision-trees-there-are-two-primary-types-of-tasks-they-can-be-used-for-each-defining-what-a-leaf-node-represents">3. <strong>Leaf Nodes</strong>: Leaf nodes in decision trees are the terminal points where decisions are made or values are predicted, concluding the path from the root through the internal nodes based on the attributes of the data being analyzed. These nodes do not split any further and represent the final output of the decision-making process within the tree structure. In the context of decision trees, there are two primary types of tasks they can be used for, each defining what a leaf node represents:</h4>
 <ol type="1">
 <li><p><strong>Classification Trees</strong>: In classification tasks, each leaf node is associated with a class label. The path from the root to a leaf node corresponds to a series of decisions based on the attributes of the dataset that leads to a classification decision. For example, in a decision tree designed to classify emails as “spam” or “not spam”, a leaf node would represent one of these two categories. The classification at a leaf is determined by the majority class of the samples that end up in the leaf after applying the decision rules encoded in the tree’s structure. The decision-making process is straightforward; starting from the root, the tree evaluates the attributes of the instance at each internal node, making a decision at each step on which branch to follow, until it reaches a leaf node that provides the final classification.</p></li>
 <li><p><strong>Regression Trees</strong>: For regression tasks, each leaf node predicts a continuous value. Instead of leading to a categorical outcome, the path through the tree culminates in a prediction of a numeric quantity. This could be, for instance, the predicted price of a house based on features like its size, age, and location. In regression trees, the value assigned to a leaf node is usually the mean or median of the values of the instances that fall into that leaf, providing a prediction for new instances that reach the leaf.</p></li>
 </ol>
 <p><strong>The Role and Importance of Leaf Nodes</strong>:</p>
 <ul>
-<li>
-<strong>Final Output</strong>: Leaf nodes represent the decision or prediction outcome of the tree, making them critically important to the tree’s overall purpose. They are the actionable results derived from the series of tests conducted at internal nodes.</li>
-<li>
-<strong>Interpretability</strong>: The path to a leaf node, consisting of a series of decisions based on clear criteria, contributes to the interpretability of decision trees. One can easily trace back the decisions made by the tree to understand why a particular prediction or classification was made.</li>
-<li>
-<strong>Simplicity</strong>: Despite their simplicity, leaf nodes encapsulate the complex decision-making process of a decision tree, making complex data relationships understandable through a series of binary decisions.</li>
-<li>
-<strong>Model Performance</strong>: The creation of leaf nodes is directly influenced by the criteria used to split data at internal nodes (e.g., Gini impurity, entropy, variance reduction). These criteria aim to maximize the homogeneity of the data points within each leaf, which is crucial for the model’s accuracy and ability to generalize.</li>
-</ul></section></section><section id="example-using-tidymodels" class="level2" data-number="5.3"><h2 data-number="5.3" class="anchored" data-anchor-id="example-using-tidymodels">
-<span class="header-section-number">5.3</span> Example Using <code>tidymodels</code>
-</h2>
+<li><strong>Final Output</strong>: Leaf nodes represent the decision or prediction outcome of the tree, making them critically important to the tree’s overall purpose. They are the actionable results derived from the series of tests conducted at internal nodes.</li>
+<li><strong>Interpretability</strong>: The path to a leaf node, consisting of a series of decisions based on clear criteria, contributes to the interpretability of decision trees. One can easily trace back the decisions made by the tree to understand why a particular prediction or classification was made.</li>
+<li><strong>Simplicity</strong>: Despite their simplicity, leaf nodes encapsulate the complex decision-making process of a decision tree, making complex data relationships understandable through a series of binary decisions.</li>
+<li><strong>Model Performance</strong>: The creation of leaf nodes is directly influenced by the criteria used to split data at internal nodes (e.g., Gini impurity, entropy, variance reduction). These criteria aim to maximize the homogeneity of the data points within each leaf, which is crucial for the model’s accuracy and ability to generalize.</li>
+</ul>
+</section>
+</section>
+<section id="example-using-tidymodels" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="example-using-tidymodels"><span class="header-section-number">5.3</span> Example Using <code>tidymodels</code></h2>
 <p>To illustrate the use of decision trees with <code>tidymodels</code> in R, let’s consider a simple example where we predict the species of the iris flower based on its measurements. This example involves creating a decision tree classification model.</p>
-<section id="setting-up-the-environment" class="level4"><h4 class="anchored" data-anchor-id="setting-up-the-environment">Setting Up the Environment</h4>
+<section id="setting-up-the-environment" class="level4">
+<h4 class="anchored" data-anchor-id="setting-up-the-environment">Setting Up the Environment</h4>
 <p>First, ensure you have <code>tidymodels</code> and <code>rpart</code> packages installed. The <code>rpart</code> package is used for creating decision trees.</p>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidymodels.tidymodels.org">tidymodels</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/bethatkinson/rpart">rpart</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="preparing-the-data" class="level4"><h4 class="anchored" data-anchor-id="preparing-the-data">Preparing the Data</h4>
+</section>
+<section id="preparing-the-data" class="level4">
+<h4 class="anchored" data-anchor-id="preparing-the-data">Preparing the Data</h4>
 <div class="cell">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span> <span class="co"># For reproducibility</span></span>
-<span></span>
-<span><span class="co"># Split the data into training and testing sets</span></span>
-<span><span class="va">iris_split</span> <span class="op">=</span> <span class="fu">initial_split</span><span class="op">(</span><span class="va">iris</span>, prop <span class="op">=</span> <span class="fl">0.75</span><span class="op">)</span></span>
-<span><span class="va">iris_train</span> <span class="op">=</span> <span class="fu">training</span><span class="op">(</span><span class="va">iris_split</span><span class="op">)</span></span>
-<span><span class="va">iris_test</span> <span class="op">=</span> <span class="fu">testing</span><span class="op">(</span><span class="va">iris_split</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">#setup data for cross validation to tune the model</span></span>
-<span><span class="va">dat_folds</span> <span class="op">=</span> <span class="fu">vfold_cv</span><span class="op">(</span><span class="va">iris_train</span>, v <span class="op">=</span> <span class="fl">5</span>, strata <span class="op">=</span> <span class="va">Species</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(iris)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>) <span class="co"># For reproducibility</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Split the data into training and testing sets</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>iris_split <span class="ot">=</span> <span class="fu">initial_split</span>(iris, <span class="at">prop =</span> <span class="fl">0.75</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>iris_train <span class="ot">=</span> <span class="fu">training</span>(iris_split)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>iris_test <span class="ot">=</span> <span class="fu">testing</span>(iris_split)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#setup data for cross validation to tune the model</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>dat_folds <span class="ot">=</span> <span class="fu">vfold_cv</span>(iris_train, <span class="at">v =</span> <span class="dv">5</span>, <span class="at">strata =</span> Species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="creating-the-model-and-recipe" class="level4"><h4 class="anchored" data-anchor-id="creating-the-model-and-recipe">Creating the Model and Recipe</h4>
+</section>
+<section id="creating-the-model-and-recipe" class="level4">
+<h4 class="anchored" data-anchor-id="creating-the-model-and-recipe">Creating the Model and Recipe</h4>
 <p>Note that there are two hyperparameters we need to determine for decision trees. They are:</p>
 <ul>
-<li>
-<code>tree_depth</code> which is the maximum number of node levels the tree can have</li>
-<li>
-<code>min_n1</code> which is the minimum number of observations in a node that are required for the node to be split further.</li>
+<li><code>tree_depth</code> which is the maximum number of node levels the tree can have</li>
+<li><code>min_n1</code> which is the minimum number of observations in a node that are required for the node to be split further.</li>
 </ul>
 <p>We will fine tune these hyperparameters using cross validation.</p>
 <div class="cell">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Define the model specification</span></span>
-<span><span class="va">dt_model</span> <span class="op">=</span> <span class="fu">decision_tree</span><span class="op">(</span>tree_depth <span class="op">=</span> <span class="fu">tune</span><span class="op">(</span><span class="op">)</span>, </span>
-<span>                          min_n <span class="op">=</span> <span class="fu">tune</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">set_engine</span><span class="op">(</span><span class="st">"rpart"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">set_mode</span><span class="op">(</span><span class="st">"classification"</span><span class="op">)</span></span>
-<span></span>
-<span></span>
-<span><span class="va">recipe</span> <span class="op">=</span> <span class="fu">recipe</span><span class="op">(</span><span class="va">Species</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">iris_train</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the model specification</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>dt_model <span class="ot">=</span> <span class="fu">decision_tree</span>(<span class="at">tree_depth =</span> <span class="fu">tune</span>(), </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">min_n =</span> <span class="fu">tune</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"rpart"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>recipe <span class="ot">=</span> <span class="fu">recipe</span>(Species <span class="sc">~</span> ., <span class="at">data =</span> iris_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="fine-tune-the-model" class="level4"><h4 class="anchored" data-anchor-id="fine-tune-the-model">Fine Tune the Model</h4>
+</section>
+<section id="fine-tune-the-model" class="level4">
+<h4 class="anchored" data-anchor-id="fine-tune-the-model">Fine Tune the Model</h4>
 <div class="cell">
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#setup the possible values of the hyperparameters.</span></span>
-<span><span class="co">#by default, tree_depth checks values from 1 to 15</span></span>
-<span><span class="co">#min_n defaults to values between, 2 and 40</span></span>
-<span><span class="va">tuning_grid</span> <span class="op">=</span> <span class="fu">grid_regular</span><span class="op">(</span></span>
-<span>  <span class="fu">tree_depth</span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  <span class="fu">min_n</span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  levels <span class="op">=</span> <span class="fl">10</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span></span>
-<span><span class="co">#fine tune the model</span></span>
-<span><span class="va">tune_results</span> <span class="op">=</span> <span class="fu">tune_grid</span><span class="op">(</span></span>
-<span>  object <span class="op">=</span> <span class="fu">workflow</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu">add_recipe</span><span class="op">(</span><span class="va">recipe</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu">add_model</span><span class="op">(</span><span class="va">dt_model</span><span class="op">)</span>,</span>
-<span>  resamples <span class="op">=</span> <span class="va">dat_folds</span>,</span>
-<span>  grid <span class="op">=</span> <span class="va">tuning_grid</span>,</span>
-<span>  metrics <span class="op">=</span> <span class="fu">metric_set</span><span class="op">(</span><span class="va">accuracy</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">best_params</span> <span class="op">=</span> <span class="fu">select_best</span><span class="op">(</span><span class="va">tune_results</span>, metric <span class="op">=</span> <span class="st">"accuracy"</span><span class="op">)</span></span>
-<span><span class="va">best_params</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#setup the possible values of the hyperparameters.</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#by default, tree_depth checks values from 1 to 15</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#min_n defaults to values between, 2 and 40</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>tuning_grid <span class="ot">=</span> <span class="fu">grid_regular</span>(</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tree_depth</span>(),</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">min_n</span>(),</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">levels =</span> <span class="dv">10</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#fine tune the model</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>tune_results <span class="ot">=</span> <span class="fu">tune_grid</span>(</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">object =</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_recipe</span>(recipe) <span class="sc">|&gt;</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_model</span>(dt_model),</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">resamples =</span> dat_folds,</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">grid =</span> tuning_grid,</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">metrics =</span> <span class="fu">metric_set</span>(accuracy)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>best_params <span class="ot">=</span> <span class="fu">select_best</span>(tune_results, <span class="at">metric =</span> <span class="st">"accuracy"</span>)</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>best_params</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 3
   tree_depth min_n .config               
@@ -364,24 +407,26 @@ Entropy(t) = -\sum_{i=1}^{J} p_i \log_2(p_i)
 1          4     2 Preprocessor1_Model003</code></pre>
 </div>
 </div>
-</section><section id="fit-the-final-model" class="level4"><h4 class="anchored" data-anchor-id="fit-the-final-model">Fit the final model</h4>
+</section>
+<section id="fit-the-final-model" class="level4">
+<h4 class="anchored" data-anchor-id="fit-the-final-model">Fit the final model</h4>
 <div class="cell">
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">fitted_model</span> <span class="op">=</span> <span class="fu">finalize_workflow</span><span class="op">(</span></span>
-<span>      <span class="fu">workflow</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>        <span class="fu">add_recipe</span><span class="op">(</span><span class="va">recipe</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>        <span class="fu">add_model</span><span class="op">(</span><span class="va">dt_model</span><span class="op">)</span>,</span>
-<span>      <span class="va">best_params</span></span>
-<span>    <span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>      <span class="fu">fit</span><span class="op">(</span>data <span class="op">=</span> <span class="va">iris_train</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fitted_model <span class="ot">=</span> <span class="fu">finalize_workflow</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>      <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>        <span class="fu">add_recipe</span>(recipe) <span class="sc">|&gt;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">add_model</span>(dt_model),</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>      best_params</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fit</span>(<span class="at">data =</span> iris_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s first examine how well we fit the training data.</p>
 <div class="cell">
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pred_train</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">fitted_model</span>, new_data <span class="op">=</span> <span class="va">iris_train</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">bind_cols</span><span class="op">(</span><span class="va">iris_train</span><span class="op">)</span></span>
-<span><span class="va">train_metrics</span> <span class="op">=</span> <span class="fu">metrics</span><span class="op">(</span><span class="va">pred_train</span>, truth <span class="op">=</span> <span class="va">Species</span>, estimate <span class="op">=</span> <span class="va">.pred_class</span><span class="op">)</span></span>
-<span><span class="va">train_conf_mat</span> <span class="op">=</span> <span class="fu">conf_mat</span><span class="op">(</span><span class="va">pred_train</span>, truth <span class="op">=</span> <span class="va">Species</span>, estimate <span class="op">=</span> <span class="va">.pred_class</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">train_metrics</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>pred_train <span class="ot">=</span> <span class="fu">predict</span>(fitted_model, <span class="at">new_data =</span> iris_train) <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(iris_train)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>train_metrics <span class="ot">=</span> <span class="fu">metrics</span>(pred_train, <span class="at">truth =</span> Species, <span class="at">estimate =</span> .pred_class)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>train_conf_mat <span class="ot">=</span> <span class="fu">conf_mat</span>(pred_train, <span class="at">truth =</span> Species, <span class="at">estimate =</span> .pred_class)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(train_metrics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 3
   .metric  .estimator .estimate
@@ -389,7 +434,7 @@ Entropy(t) = -\sum_{i=1}^{J} p_i \log_2(p_i)
 1 accuracy multiclass     0.991
 2 kap      multiclass     0.987</code></pre>
 </div>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">train_conf_mat</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(train_conf_mat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Truth
 Prediction   setosa versicolor virginica
@@ -400,26 +445,28 @@ Prediction   setosa versicolor virginica
 </div>
 <p>We can visualize the decision tree using the <code>rpart.plot</code> library.</p>
 <div class="cell">
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.milbo.org/rpart-plot/index.html">rpart.plot</a></span><span class="op">)</span></span>
-<span><span class="va">tree_fit</span> <span class="op">=</span> <span class="va">fitted_model</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">extract_fit_parsnip</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/rpart.plot/man/rpart.plot.html">rpart.plot</a></span><span class="op">(</span><span class="va">tree_fit</span><span class="op">$</span><span class="va">fit</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart.plot)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>tree_fit <span class="ot">=</span> fitted_model <span class="sc">|&gt;</span> </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_fit_parsnip</span>()</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">rpart.plot</span>(tree_fit<span class="sc">$</span>fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="05_Decision_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="576"></p>
 </div>
 </div>
-</section><section id="predicting-and-evaluating" class="level4"><h4 class="anchored" data-anchor-id="predicting-and-evaluating">Predicting and Evaluating</h4>
+</section>
+<section id="predicting-and-evaluating" class="level4">
+<h4 class="anchored" data-anchor-id="predicting-and-evaluating">Predicting and Evaluating</h4>
 <p>Let’s now predict the testing data.</p>
 <div class="cell">
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Make predictions</span></span>
-<span><span class="va">predictions</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">fitted_model</span>, <span class="va">iris_test</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">bind_cols</span><span class="op">(</span><span class="va">iris_test</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Evaluate the model</span></span>
-<span><span class="va">test_metrics</span> <span class="op">=</span> <span class="fu">metrics</span><span class="op">(</span><span class="va">predictions</span>, truth <span class="op">=</span> <span class="va">Species</span>, estimate <span class="op">=</span> <span class="va">.pred_class</span><span class="op">)</span></span>
-<span><span class="va">test_conf_mat</span> <span class="op">=</span> <span class="fu">conf_mat</span><span class="op">(</span><span class="va">predictions</span>, truth <span class="op">=</span> <span class="va">Species</span>, estimate <span class="op">=</span> <span class="va">.pred_class</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">test_metrics</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make predictions</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>predictions <span class="ot">=</span> <span class="fu">predict</span>(fitted_model, iris_test) <span class="sc">|&gt;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(iris_test)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate the model</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>test_metrics <span class="ot">=</span> <span class="fu">metrics</span>(predictions, <span class="at">truth =</span> Species, <span class="at">estimate =</span> .pred_class)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>test_conf_mat <span class="ot">=</span> <span class="fu">conf_mat</span>(predictions, <span class="at">truth =</span> Species, <span class="at">estimate =</span> .pred_class)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(test_metrics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 3
   .metric  .estimator .estimate
@@ -427,7 +474,7 @@ Prediction   setosa versicolor virginica
 1 accuracy multiclass     0.947
 2 kap      multiclass     0.920</code></pre>
 </div>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">test_conf_mat</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(test_conf_mat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Truth
 Prediction   setosa versicolor virginica
@@ -437,81 +484,83 @@ Prediction   setosa versicolor virginica
 </div>
 </div>
 <p>Note that the accuracy is slightly below the training data accuracy.</p>
-</section></section><section id="decision-trees-for-regression" class="level2" data-number="5.4"><h2 data-number="5.4" class="anchored" data-anchor-id="decision-trees-for-regression">
-<span class="header-section-number">5.4</span> 4. Decision Trees for Regression</h2>
+</section>
+</section>
+<section id="decision-trees-for-regression" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="decision-trees-for-regression"><span class="header-section-number">5.4</span> 4. Decision Trees for Regression</h2>
 <p>Regression trees are used when the target variable is continuous. Instead of predicting a class for each instance, regression trees predict a real number. For example, a regression tree might predict the price of a house based on features such as the number of bedrooms, the house’s age, and its location.</p>
 <p><strong>Example: Diamonds dataset</strong></p>
 <div class="cell">
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidymodels.tidymodels.org">tidymodels</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span> <span class="co"># For the diamonds dataset</span></span>
-<span></span>
-<span><span class="co"># Load the diamonds dataset</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">diamonds</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Sample for a manageable size</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
-<span><span class="va">diamonds_sample</span> <span class="op">=</span> <span class="va">diamonds</span> <span class="op">|&gt;</span> <span class="fu">sample_n</span><span class="op">(</span><span class="fl">2000</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Initial data split</span></span>
-<span><span class="va">split</span> <span class="op">=</span> <span class="fu">initial_split</span><span class="op">(</span><span class="va">diamonds_sample</span>, prop <span class="op">=</span> <span class="fl">0.75</span><span class="op">)</span></span>
-<span><span class="va">train_data</span> <span class="op">=</span> <span class="fu">training</span><span class="op">(</span><span class="va">split</span><span class="op">)</span></span>
-<span><span class="va">test_data</span> <span class="op">=</span> <span class="fu">testing</span><span class="op">(</span><span class="va">split</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">#setup data for cross validation to tune the model</span></span>
-<span><span class="va">dat_folds</span> <span class="op">=</span> <span class="fu">vfold_cv</span><span class="op">(</span><span class="va">train_data</span>, v <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Create a recipe</span></span>
-<span><span class="va">recipe</span> <span class="op">=</span> <span class="fu">recipe</span><span class="op">(</span><span class="va">price</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">train_data</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">step_dummy</span><span class="op">(</span><span class="fu">all_nominal</span><span class="op">(</span><span class="op">)</span>, <span class="op">-</span><span class="fu">all_outcomes</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">#setup model</span></span>
-<span><span class="va">dt_model</span> <span class="op">=</span> <span class="fu">decision_tree</span><span class="op">(</span>tree_depth <span class="op">=</span> <span class="fu">tune</span><span class="op">(</span><span class="op">)</span>, </span>
-<span>                          min_n <span class="op">=</span> <span class="fu">tune</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">set_engine</span><span class="op">(</span><span class="st">"rpart"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">set_mode</span><span class="op">(</span><span class="st">"regression"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">#setup tuning grid</span></span>
-<span><span class="va">tuning_grid</span> <span class="op">=</span> <span class="fu">grid_regular</span><span class="op">(</span></span>
-<span>  <span class="fu">tree_depth</span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  <span class="fu">min_n</span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  levels <span class="op">=</span> <span class="fl">10</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span></span>
-<span><span class="co">#fine tune the model</span></span>
-<span><span class="va">tune_results</span> <span class="op">=</span> <span class="fu">tune_grid</span><span class="op">(</span></span>
-<span>  object <span class="op">=</span> <span class="fu">workflow</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu">add_recipe</span><span class="op">(</span><span class="va">recipe</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu">add_model</span><span class="op">(</span><span class="va">dt_model</span><span class="op">)</span>,</span>
-<span>  resamples <span class="op">=</span> <span class="va">dat_folds</span>,</span>
-<span>  grid <span class="op">=</span> <span class="va">tuning_grid</span>,</span>
-<span>  metrics <span class="op">=</span> <span class="fu">metric_set</span><span class="op">(</span><span class="va">rmse</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">#get the best hyperparameters</span></span>
-<span><span class="va">best_params</span> <span class="op">=</span> <span class="fu">select_best</span><span class="op">(</span><span class="va">tune_results</span>, metric <span class="op">=</span> <span class="st">"rmse"</span><span class="op">)</span></span>
-<span><span class="va">best_params</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2) <span class="co"># For the diamonds dataset</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the diamonds dataset</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(diamonds)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample for a manageable size</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>diamonds_sample <span class="ot">=</span> diamonds <span class="sc">|&gt;</span> <span class="fu">sample_n</span>(<span class="dv">2000</span>)</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Initial data split</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>split <span class="ot">=</span> <span class="fu">initial_split</span>(diamonds_sample, <span class="at">prop =</span> <span class="fl">0.75</span>)</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>train_data <span class="ot">=</span> <span class="fu">training</span>(split)</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>test_data <span class="ot">=</span> <span class="fu">testing</span>(split)</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="co">#setup data for cross validation to tune the model</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>dat_folds <span class="ot">=</span> <span class="fu">vfold_cv</span>(train_data, <span class="at">v =</span> <span class="dv">5</span>)</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a recipe</span></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>recipe <span class="ot">=</span> <span class="fu">recipe</span>(price <span class="sc">~</span> ., <span class="at">data =</span> train_data) <span class="sc">|&gt;</span></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>())</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a><span class="co">#setup model</span></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>dt_model <span class="ot">=</span> <span class="fu">decision_tree</span>(<span class="at">tree_depth =</span> <span class="fu">tune</span>(), </span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>                          <span class="at">min_n =</span> <span class="fu">tune</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"rpart"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>)</span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a><span class="co">#setup tuning grid</span></span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>tuning_grid <span class="ot">=</span> <span class="fu">grid_regular</span>(</span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tree_depth</span>(),</span>
+<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">min_n</span>(),</span>
+<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a>  <span class="at">levels =</span> <span class="dv">10</span></span>
+<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a><span class="co">#fine tune the model</span></span>
+<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a>tune_results <span class="ot">=</span> <span class="fu">tune_grid</span>(</span>
+<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a>  <span class="at">object =</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
+<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_recipe</span>(recipe) <span class="sc">|&gt;</span></span>
+<span id="cb16-41"><a href="#cb16-41" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_model</span>(dt_model),</span>
+<span id="cb16-42"><a href="#cb16-42" aria-hidden="true" tabindex="-1"></a>  <span class="at">resamples =</span> dat_folds,</span>
+<span id="cb16-43"><a href="#cb16-43" aria-hidden="true" tabindex="-1"></a>  <span class="at">grid =</span> tuning_grid,</span>
+<span id="cb16-44"><a href="#cb16-44" aria-hidden="true" tabindex="-1"></a>  <span class="at">metrics =</span> <span class="fu">metric_set</span>(rmse)</span>
+<span id="cb16-45"><a href="#cb16-45" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-46"><a href="#cb16-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-47"><a href="#cb16-47" aria-hidden="true" tabindex="-1"></a><span class="co">#get the best hyperparameters</span></span>
+<span id="cb16-48"><a href="#cb16-48" aria-hidden="true" tabindex="-1"></a>best_params <span class="ot">=</span> <span class="fu">select_best</span>(tune_results, <span class="at">metric =</span> <span class="st">"rmse"</span>)</span>
+<span id="cb16-49"><a href="#cb16-49" aria-hidden="true" tabindex="-1"></a>best_params</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 3
   tree_depth min_n .config               
        &lt;int&gt; &lt;int&gt; &lt;chr&gt;                 
 1          5     2 Preprocessor1_Model004</code></pre>
 </div>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#fit the final model</span></span>
-<span><span class="va">fitted_model</span> <span class="op">=</span> <span class="fu">finalize_workflow</span><span class="op">(</span></span>
-<span>  <span class="fu">workflow</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu">add_recipe</span><span class="op">(</span><span class="va">recipe</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu">add_model</span><span class="op">(</span><span class="va">dt_model</span><span class="op">)</span>,</span>
-<span>  <span class="va">best_params</span></span>
-<span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">fit</span><span class="op">(</span>data <span class="op">=</span> <span class="va">train_data</span><span class="op">)</span></span>
-<span></span>
-<span></span>
-<span><span class="co">#see how well the model fit the training data</span></span>
-<span><span class="va">pred_train</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">fitted_model</span>, new_data <span class="op">=</span> <span class="va">train_data</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">bind_cols</span><span class="op">(</span><span class="va">train_data</span><span class="op">)</span></span>
-<span><span class="va">train_metrics</span> <span class="op">=</span> <span class="fu">metrics</span><span class="op">(</span><span class="va">pred_train</span>, truth <span class="op">=</span> <span class="va">price</span>, estimate <span class="op">=</span> <span class="va">.pred</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">train_metrics</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#fit the final model</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>fitted_model <span class="ot">=</span> <span class="fu">finalize_workflow</span>(</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_recipe</span>(recipe) <span class="sc">|&gt;</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_model</span>(dt_model),</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  best_params</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(<span class="at">data =</span> train_data)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="co">#see how well the model fit the training data</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>pred_train <span class="ot">=</span> <span class="fu">predict</span>(fitted_model, <span class="at">new_data =</span> train_data) <span class="sc">|&gt;</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(train_data)</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>train_metrics <span class="ot">=</span> <span class="fu">metrics</span>(pred_train, <span class="at">truth =</span> price, <span class="at">estimate =</span> .pred)</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(train_metrics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
   .metric .estimator .estimate
@@ -520,19 +569,19 @@ Prediction   setosa versicolor virginica
 2 rsq     standard       0.905
 3 mae     standard     802.   </code></pre>
 </div>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#visualize the tree</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.milbo.org/rpart-plot/index.html">rpart.plot</a></span><span class="op">)</span></span>
-<span><span class="va">tree_fit</span> <span class="op">=</span> <span class="va">fitted_model</span> <span class="op">|&gt;</span></span>
-<span><span class="fu">extract_fit_parsnip</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/rpart.plot/man/rpart.plot.html">rpart.plot</a></span><span class="op">(</span><span class="va">tree_fit</span><span class="op">$</span><span class="va">fit</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#visualize the tree</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart.plot)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>tree_fit <span class="ot">=</span> fitted_model <span class="sc">|&gt;</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="fu">extract_fit_parsnip</span>()</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rpart.plot</span>(tree_fit<span class="sc">$</span>fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="05_Decision_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="576"></p>
 </div>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Make predictions and gauge performance on test data</span></span>
-<span><span class="va">predictions</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">fitted_model</span>, <span class="va">test_data</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">bind_cols</span><span class="op">(</span><span class="va">test_data</span><span class="op">)</span></span>
-<span><span class="va">test_metrics</span> <span class="op">=</span> <span class="fu">metrics</span><span class="op">(</span><span class="va">predictions</span>, truth <span class="op">=</span> <span class="va">price</span>, estimate <span class="op">=</span> <span class="va">.pred</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">test_metrics</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make predictions and gauge performance on test data</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>predictions <span class="ot">=</span> <span class="fu">predict</span>(fitted_model, test_data) <span class="sc">|&gt;</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(test_data)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>test_metrics <span class="ot">=</span> <span class="fu">metrics</span>(predictions, <span class="at">truth =</span> price, <span class="at">estimate =</span> .pred)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(test_metrics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
   .metric .estimator .estimate
@@ -542,13 +591,17 @@ Prediction   setosa versicolor virginica
 3 mae     standard     916.   </code></pre>
 </div>
 </div>
-</section><section id="advantages-and-disadvantages" class="level2" data-number="5.5"><h2 data-number="5.5" class="anchored" data-anchor-id="advantages-and-disadvantages">
-<span class="header-section-number">5.5</span> Advantages and Disadvantages</h2>
+</section>
+<section id="advantages-and-disadvantages" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="advantages-and-disadvantages"><span class="header-section-number">5.5</span> Advantages and Disadvantages</h2>
 <p>Decision trees offer several advantages. First, they are simple and interpretable—trees can be visualized and easily understood, even by non-experts, making them especially useful for decision support. They are also flexible, as they can handle both numerical and categorical data. Additionally, their non-parametric nature means they do not assume any specific distribution of the data, making them well-suited for capturing non-linear relationships.</p>
 <p>However, decision trees also have notable disadvantages. They are prone to overfitting; without proper pruning, they can become overly complex and fail to generalize to new data. They can also be unstable, as small changes in the dataset can result in significantly different trees. Finally, because the algorithm used to build decision trees is greedy—making the best local choice at each step—it may miss the globally optimal solution.</p>
 
 
-</section></main><!-- /main --><script>
+</section>
+
+</main> <!-- /main -->
+<script>
 
 /* update total correct if #webex-total_correct exists */
 update_total_correct = function() {
@@ -753,7 +806,8 @@ window.onload = function() {
   update_total_correct();
 }
 
-</script><script id="quarto-html-after-body" type="application/javascript">
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -985,7 +1039,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
       <a href="./04_SVM.html" class="pagination-link">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Support Vector Machines</span></span>
       </a>          
@@ -997,7 +1053,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
-<footer class="footer"><div class="nav-footer">
+<footer class="footer">
+  <div class="nav-footer">
     <div class="nav-footer-left">
       &nbsp;
     </div>   
@@ -1007,6 +1064,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     <div class="nav-footer-right">STA 5320</div>
   </div>
 </footer>
+
 
 
 </body></html>
